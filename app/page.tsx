@@ -17,4 +17,22 @@ function Walk() { const stops=['和傘屋　旭村','古着屋 IRO','柳ケ瀬�
 function Experience() { return <><TopBar title="EXPERIENCE"/><main className="content experience"><div className="experience-photo"/><span className="eyebrow">CRAFT EXPERIENCE</span><h1>岐阜和傘づくり体験</h1><p className="lead">受け継がれる美意識を、あなたの手で。</p><div className="facts"><span>◷ 120 分</span><span>⌖ 岐阜市 柳ケ瀬</span><span>¥8,800〜</span></div><hr/><h3>体験のストーリー</h3><p>岐阜の伝統工芸「和傘」。職人の手仕事に触れながら、世界に一つだけの和傘をつくる特別な時間です。</p><div className="mini-card"><span>レンタル和傘</span><b>体験当日は職人が選んだ和傘を無料でレンタルできます。</b></div><button className="primary">体験を予約する</button></main></> }
 function Drop() { const products=[['志野焼 湯呑み','¥9,900','https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=500&q=80'],['名入れ和傘（紺・麻の葉）','¥33,000','https://images.unsplash.com/photo-1558180700-0c1b2684f8cb?auto=format&fit=crop&w=500&q=80'],['美濃和紙 手漉き便箋','¥2,420','https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=500&q=80']]; return <><TopBar title="🔒 DROP"/><main className="content drop"><section className="drop-head"><span className="eyebrow gold">ON SITE ONLY</span><h1>この場所で解放された<br/>限定アイテム</h1><p>現地でQRを読み取って、限定アイテムを解放しました。</p></section>{products.map(([name,price,image],i)=><article className="drop-product" key={name}><img src={image} alt="限定商品"/><div><span>{i===0?'現地限定':i===1?'限定制作':'残りわずか'}</span><b>{name}</b><strong>{price}</strong><small>残り {7-i*2} 点</small></div></article>)}<p className="drop-note">アイテムは当日かぎりです。<br/>再訪時は現地QRを読み取ってください。</p></main></> }
 function Map() { const marks=['♜','☕','♜','♨','◒','♜','♧','⌂','♨']; return <><TopBar title="マップで探す"/><main className="content map"><div className="chips"><b>すべて</b><span>ART</span><span>CRAFT</span><span>FOOD</span></div><div className="map-area">{marks.map((m,i)=><i key={i} style={{left:`${10+(i*29)%76}%`,top:`${12+(i*37)%74}%`}}>{m}</i>)}</div><article className="map-card"><div><b>喫茶 星時</b><small>カフェ・喫茶　神室町</small><p>レトロな空間で自家焙煎コーヒーを。</p></div><img src={picks[2].image} alt="喫茶店"/></article></main></> }
-export default function App() { const [view,setView]=useState<View>('home'); const pages={home:<Home setView={setView}/>,picks:<Picks/>,walk:<Walk/>,experience:<Experience/>,drop:<Drop/>,map:<Map/>}; return <div className="app-shell"><div className="phone">{pages[view]}<Nav view={view} setView={setView}/></div><aside className="desktop-copy"><span>GIFU LOCAL</span><h2>岐阜の文化と出会い、<br/>あなたの物語になる。</h2><p>市民が選ぶ「いい岐阜」を、知る・歩く・体験する・買う。</p><div>LOCAL CULTURE PLATFORM<br/>YANAGASE, GIFU</div></aside></div> }
+const board = [
+  { no: '01', label: 'ホーム', key: 'home' as View },
+  { no: '02', label: 'LOCAL PICKS', key: 'picks' as View },
+  { no: '03', label: 'WALK / ROUTE', key: 'walk' as View },
+  { no: '04', label: 'EXPERIENCE', key: 'experience' as View },
+  { no: '05', label: 'DROP（限定解放）', key: 'drop' as View },
+];
+export default function App() {
+  const [view,setView]=useState<View>('home');
+  const pages={home:<Home setView={setView}/>,picks:<Picks/>,walk:<Walk/>,experience:<Experience/>,drop:<Drop/>,map:<Map/>};
+  const staticPages: Record<View, React.ReactNode>={home:<Home setView={()=>{}}/>,picks:<Picks/>,walk:<Walk/>,experience:<Experience/>,drop:<Drop/>,map:<Map/>};
+  return <>
+    <div className="mobile-app"><div className="phone">{pages[view]}<Nav view={view} setView={setView}/></div></div>
+    <main className="design-board">
+      <header className="brand"><div className="brand-mark">⌂</div><div><b>GIFU LOCAL</b><p>岐阜の文化と出会い、あなたの物語になる。</p></div></header>
+      <section className="screen-row">{board.map((item) => <article className="screen-column" key={item.key}><div className="screen-label"><span>{item.no}</span><b>{item.label}</b></div><div className="mini-phone">{staticPages[item.key]}<Nav view={item.key} setView={()=>{}}/></div></article>)}</section>
+    </main>
+  </>;
+}
