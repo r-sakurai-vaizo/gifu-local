@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useId, useState, type ReactNode } from 'react';
 
 type View='home'|'about'|'pass'|'passcheckout'|'passdone'|'eventlist'|'walk'|'culture'|'experience'|'shop'|'shoplist'|'maker'|'spot'|'map'|'search';
 type AppState={saved:boolean;booked:boolean;passOwned:boolean;passPlan:string;makerId:string};
@@ -59,13 +59,15 @@ const homeImages={
 
 /* ---------- GIFU ART PASS (販売導線モック・決済なし) ---------- */
 const passPlans=[
- {id:'1day',name:'ART PASS 1DAY',price:'¥1,000',period:'最初の入館から24時間有効',copy:'岐阜公園から柳ヶ瀬まで、日帰りでまとめて巡る。'},
- {id:'2day',name:'ART PASS 2DAY',price:'¥1,500',period:'最初の入館から48時間有効',copy:'一泊して、県美術館まで足を延ばしてゆっくり巡る。'}
+ {id:'1day',name:'ART PASS 1DAY',price:'¥600',period:'最初の入館から24時間有効',copy:'岐阜公園の2館(計620円)を巡るだけで元が取れる。'},
+ {id:'2day',name:'ART PASS 2DAY',price:'¥900',period:'最初の入館から48時間有効',copy:'一泊して県美術館まで。公立3館(計960円)で元が取れる。'},
+ {id:'2dayplus',name:'ART PASS 2DAY+',price:'¥1,500',period:'最初の入館から48時間有効',copy:'三甲美術館込み。三甲+どれか1館(計1,510円)で元が取れる。'}
 ];
 const passTargets:[string,string,string][]=[
  ['岐阜市歴史博物館','岐阜公園内・通常 大人310円',officialLinks.rekihaku],
  ['加藤栄三・東一記念美術館','岐阜公園内(歴史博物館 分館)・通常 大人310円',officialLinks.rekihaku],
- ['岐阜県美術館','宇佐・JR西岐阜駅側',officialLinks.kenbi]
+ ['岐阜県美術館','宇佐・JR西岐阜駅側・通常 大人340円',officialLinks.kenbi],
+ ['三甲美術館(沙羅双樹の館)','長良・通常 大人1,200円 ※2DAY+のみ対象',officialLinks.sanko]
 ];
 const passPerkSpots:[string,string,string][]=[
  ['ぎふメディアコスモス','司町・入館無料。市民の展示スペースをスタンプポイントに',officialLinks.mediacosmos],
@@ -208,16 +210,16 @@ function About({go}:{go:(v:View)=>void}){return <><Top title="ABOUT" back go={go
 </main></>}
 
 /* ---------- ART PASS バナー・ページ ---------- */
-function PassBanner({go}:{go:(v:View)=>void}){return <button className="pass-banner" onClick={()=>go('pass')}><div><small>GIFU ART PASS(構想デモ)</small><h2>美術館も、ギャラリーも、工芸の店も。<br/>1枚のパスで、まとめて巡る。</h2><p>岐阜公園〜川原町〜司町〜柳ヶ瀬〜駅。徒歩でつながるアートの動線を、デジタルパス1枚で。売上の一部は作り手に還元する構想です。</p><span>パスを見る　›</span></div><aside><div className="pass-card-mini"><small>GIFU ART PASS</small><b>1DAY / ¥1,000</b><i>▣</i><em>この画面を施設で提示(構想)</em></div></aside></button>}
-function PassPage({go}:{go:(v:View)=>void;s:AppState;set:(p:Partial<AppState>)=>void}){return <main className="content pass-page"><section className="pass-hero" style={{backgroundImage:`linear-gradient(#061827a8,#061827e6),url('${homeImages.park}')`}}><small>GIFU ART PASS</small><h1>岐阜のアートを、<br/>1枚で巡るパス。</h1><p>岐阜公園の美術館から、川原町の工芸、柳ヶ瀬の作家スペースまで。徒歩でつながる動線を、スマホのデジタルパスでまとめて楽しむ——その販売導線のデモです。</p><DemoNote>これは大学プロジェクトの構想デモです。実際の販売・決済は行われません。</DemoNote></section>
- <section className="pass-plans"><h2>パスの種類(想定価格の例)</h2><div>{passPlans.map(p=><article key={p.id}><small>{p.name}</small><strong>{p.price}</strong><b>{p.period}</b><p>{p.copy}</p><button onClick={()=>go('passcheckout')}>このパスを選ぶ(デモ)</button></article>)}</div><p className="pass-note">対象施設を個別に巡る場合の入館料合計より割安になる価格を想定しています。</p></section>
+function PassBanner({go}:{go:(v:View)=>void}){return <button className="pass-banner" onClick={()=>go('pass')}><div><small>GIFU ART PASS(構想デモ)</small><h2>美術館も、ギャラリーも、工芸の店も。<br/>1枚のパスで、まとめて巡る。</h2><p>岐阜公園〜川原町〜司町〜柳ヶ瀬〜駅。徒歩でつながるアートの動線を、デジタルパス1枚で。売上の一部は作り手に還元する構想です。</p><span>パスを見る　›</span></div><aside><div className="pass-card-mini"><small>GIFU ART PASS</small><b>1DAY / ¥600</b><i>▣</i><em>この画面を施設で提示(構想)</em></div></aside></button>}
+function PassPage({go,set}:{go:(v:View)=>void;s:AppState;set:(p:Partial<AppState>)=>void}){return <main className="content pass-page"><section className="pass-hero" style={{backgroundImage:`linear-gradient(#061827a8,#061827e6),url('${homeImages.park}')`}}><small>GIFU ART PASS</small><h1>岐阜のアートを、<br/>1枚で巡るパス。</h1><p>岐阜公園の美術館から、川原町の工芸、柳ヶ瀬の作家スペースまで。徒歩でつながる動線を、スマホのデジタルパスでまとめて楽しむ——その販売導線のデモです。</p><DemoNote>これは大学プロジェクトの構想デモです。実際の販売・決済は行われません。</DemoNote></section>
+ <section className="pass-plans"><h2>パスの種類(想定価格の例)</h2><div>{passPlans.map(p=><article key={p.id}><small>{p.name}</small><strong>{p.price}</strong><b>{p.period}</b><p>{p.copy}</p><button onClick={()=>{set({passPlan:p.id});go('passcheckout')}}>このパスを選ぶ(デモ)</button></article>)}</div><p className="pass-note">1DAYは岐阜公園の2館だけで、2DAYは公立3館で、2DAY+は三甲美術館+どれか1館で「元が取れる」想定価格(例)です。</p></section>
  <section className="pass-list"><h2>入館対象(構想中の例)</h2>{passTargets.map(x=><a key={x[0]} href={x[2]} target="_blank" rel="noreferrer"><b>{x[0]}</b><small>{x[1]}</small><span>公式 ↗</span></a>)}<h2>スタンプ・特典(構想中の例)</h2>{passPerkSpots.map(x=><a key={x[0]} href={x[2]} target="_blank" rel="noreferrer"><b>{x[0]}</b><small>{x[1]}</small><span>公式 ↗</span></a>)}<p className="pass-note">※掲載施設は構想中の例であり、各施設と提携・合意したものではありません。</p></section>
  <section className="pass-return"><h2>売上は、作り手に還る。</h2><p>パス売上の一部を、岐阜和傘の後継者育成や、やながせ倉庫の作家など「岐阜のアートの作り手」への支援に充てる構想です。パスを買うことが、そのまま応援になる仕組みを目指します。</p><button onClick={()=>go('maker')}>作り手を知る　›</button></section>
  <section className="pass-how"><h2>使い方(構想)</h2><ol><li>この画面からパスを購入(登録・アプリ不要)</li><li>スマホに表示されるデジタルパスを施設の受付で提示</li><li>スタンプポイントではQRを読み取って巡った記録を残す</li></ol><p className="pass-note">※有償デジタルパスの発行には資金決済法(前払式支払手段)上の整理が必要なため、現段階では構想デモとして表示しています。</p></section>
  <button className="primary" onClick={()=>go('passcheckout')}>購入手続きへ(デモ)</button></main>}
-function PassCheckout({go,s,set}:{go:(v:View)=>void;s:AppState;set:(p:Partial<AppState>)=>void}){const [plan,setPlan]=useState(s.passPlan||'1day');const sel=passPlans.find(p=>p.id===plan)!;return <main className="content pass-page"><span className="eyebrow">GIFU ART PASS / DEMO</span><h1 className="page-title">購入手続き(デモ)</h1><DemoNote>UI確認用のデモです。決済は発生せず、入力情報も送信されません。</DemoNote>
- <section className="pass-checkout-card"><h2>1. パスを選ぶ</h2>{passPlans.map(p=><label className="pass-radio" key={p.id}><input type="radio" name="plan" checked={plan===p.id} onChange={()=>setPlan(p.id)}/><div><b>{p.name}　{p.price}</b><small>{p.period}</small></div></label>)}</section>
- <section className="pass-checkout-card"><h2>2. お支払い方法(デモ)</h2>{['クレジットカード(デモ)','コード決済(デモ)','コンビニ支払い(デモ)'].map((x,i)=><label className="pass-radio" key={x}><input type="radio" name="pay" defaultChecked={i===0}/><div><b>{x}</b></div></label>)}<p className="pass-note">登録・アカウント作成は不要です。パスはこの端末に保存されます(構想)。</p></section>
+function PassCheckout({go,s,set}:{go:(v:View)=>void;s:AppState;set:(p:Partial<AppState>)=>void}){const uid=useId();const [plan,setPlan]=useState(s.passPlan||'1day');const sel=passPlans.find(p=>p.id===plan)!;return <main className="content pass-page"><span className="eyebrow">GIFU ART PASS / DEMO</span><h1 className="page-title">購入手続き(デモ)</h1><DemoNote>UI確認用のデモです。決済は発生せず、入力情報も送信されません。</DemoNote>
+ <section className="pass-checkout-card"><h2>1. パスを選ぶ</h2>{passPlans.map(p=><label className="pass-radio" key={p.id}><input type="radio" name={uid+'plan'} checked={plan===p.id} onChange={()=>setPlan(p.id)}/><div><b>{p.name}　{p.price}</b><small>{p.period}</small></div></label>)}</section>
+ <section className="pass-checkout-card"><h2>2. お支払い方法(デモ)</h2>{['クレジットカード(デモ)','コード決済(デモ)','コンビニ支払い(デモ)'].map((x,i)=><label className="pass-radio" key={x}><input type="radio" name={uid+'pay'} defaultChecked={i===0}/><div><b>{x}</b></div></label>)}<p className="pass-note">登録・アカウント作成は不要です。パスはこの端末に保存されます(構想)。</p></section>
  <section className="pass-checkout-card pass-summary"><span>{sel.name}<b>{sel.price}</b></span><span>手数料<b>¥0</b></span><strong>合計(税込)<b>{sel.price}</b></strong></section>
  <button className="primary" onClick={()=>{set({passOwned:true,passPlan:plan});go('passdone')}}>デモ購入を確定する</button><button className="secondary" onClick={()=>go('pass')}>パスの説明に戻る</button></main>}
 function PassDone({go,s}:{go:(v:View)=>void;s:AppState}){const sel=passPlans.find(p=>p.id===s.passPlan)||passPlans[0];return <main className="content pass-page pass-done"><span className="eyebrow">GIFU ART PASS / DEMO</span><h1 className="page-title">パスが発行されました(デモ)</h1>
