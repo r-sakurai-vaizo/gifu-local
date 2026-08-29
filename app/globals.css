@@ -148,34 +148,42 @@
 .maker-return{padding:10px 12px;border-left:3px solid #c59a4f;background:#faf5ea;font-size:11px;line-height:1.8}
 
 /* pass banner (home) */
-.pass-banner{display:grid;width:100%;grid-template-columns:1.25fr .75fr;min-height:225px;border:0;padding:0;background:#071b40;color:#fff;text-align:left;cursor:pointer}
-.pass-banner>div{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:10px;padding:28px 26px}
+.pass-banner{display:grid;width:100%;grid-template-columns:1.1fr .9fr;min-height:310px;border:0;padding:0;background:#071b40 url('/art-ticket-gifu.png') center/cover;color:#fff;text-align:left;cursor:pointer;position:relative;overflow:hidden;isolation:isolate}
+.pass-banner:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#061827fa 0%,#061827dc 49%,#06182755),linear-gradient(0deg,#06182755,#06182710)}
+.pass-banner:after{content:"";position:absolute;inset:12px;border:1px solid #c9a35f66;pointer-events:none}
+.pass-banner-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:44px 46px}
 .pass-banner small{color:#d6ad69;font:9px Georgia;letter-spacing:.22em}
-.pass-banner h2{margin:0;font:22px/1.55 "Yu Mincho",Georgia,serif}
-.pass-banner p{margin:0;font-size:10px;line-height:1.9;color:#c8d2dd}
+.pass-banner h2{margin:0;font:27px/1.55 "Yu Mincho",Georgia,serif;letter-spacing:.04em}
+.pass-banner p{max-width:550px;margin:0;font-size:11px;line-height:1.9;color:#d7dfe6}
 .pass-banner>div>span{padding-bottom:4px;border-bottom:1px solid #c9a35f;color:#e3c78f;font-size:10px}
-.pass-banner aside{position:relative;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#123059,#071b40);padding:20px}
-.pass-card-mini{width:190px;padding:16px;border:1px solid #c9a35f;background:#0a2342;display:grid;gap:7px;box-shadow:0 14px 34px #00000066;transform:rotate(-3deg)}
-.pass-card-mini small{color:#d6ad69;font:8px Georgia;letter-spacing:.2em}
-.pass-card-mini b{font:15px Georgia}
-.pass-card-mini i{font-style:normal;font-size:34px;color:#e3c78f}
-.pass-card-mini em{font-style:normal;font-size:8px;color:#8fa0b3}
-@media(max-width:800px){.pass-banner{grid-template-columns:1fr}.pass-banner aside{padding:0 0 26px}}
+.pass-banner>aside{position:relative;display:grid;place-items:center;padding:30px}
+.pass-card-mini{width:min(360px,90%);min-height:155px;border:1px solid #d6ad69;background:#f4eddf;color:#071b40;display:grid;grid-template-columns:1fr 92px;box-shadow:0 24px 55px #0009;transform:rotate(-3deg);position:relative}
+.pass-card-mini:before,.pass-card-mini:after{content:"";position:absolute;right:81px;width:20px;height:20px;border-radius:50%;background:#0a1b2c}.pass-card-mini:before{top:-11px}.pass-card-mini:after{bottom:-11px}
+.ticket-mini-main{padding:24px 25px;display:grid;align-content:center;gap:6px;background:linear-gradient(135deg,#f8f2e8,#e8dbc2)}
+.ticket-mini-main small{font:8px Georgia;letter-spacing:.2em;color:#8b652f}.ticket-mini-main b{font:25px Georgia;letter-spacing:.08em}.ticket-mini-main em{font:9px Georgia;letter-spacing:.18em;color:#6b5840}.ticket-mini-main span{margin-top:13px;font:8px Georgia;letter-spacing:.16em;color:#8b7a62}
+.ticket-mini-stub{border-left:1px dashed #9b8158;display:grid;place-items:center;align-content:center;gap:9px;background:#d2aa62}.ticket-mini-stub small{font:7px Georgia;color:#071b40;writing-mode:vertical-rl}
+.ticket-qr{width:58px;height:58px;position:relative;background:repeating-conic-gradient(#071b40 0 25%,#f5efe3 0 50%) 0 0/10px 10px;border:5px solid #f5efe3;box-shadow:0 0 0 1px #071b40}
+.ticket-qr i{position:absolute;width:15px;height:15px;border:4px solid #071b40;background:#f5efe3}.ticket-qr i:nth-child(1){left:1px;top:1px}.ticket-qr i:nth-child(2){right:1px;top:1px}.ticket-qr i:nth-child(3){left:1px;bottom:1px}.ticket-qr span{position:absolute;right:5px;bottom:5px;width:11px;height:11px;background:#071b40}
+@media(max-width:800px){.pass-banner{grid-template-columns:1fr;min-height:520px;background-position:65% center}.pass-banner:before{background:linear-gradient(#061827f5 0%,#061827ca 55%,#06182780)}.pass-banner-copy{padding:38px 27px 20px}.pass-banner h2{font-size:23px}.pass-banner>aside{padding:20px 15px 38px}.pass-card-mini{width:min(330px,92%)}}
 
 /* pass pages */
 .pass-page{display:grid;gap:18px;padding-bottom:80px}
-.pass-hero{margin:0 -12px;padding:44px 26px;background-position:center;background-size:cover;color:#fff}
+.pass-hero{margin:0 -12px;min-height:470px;padding:68px 48px;background-position:center;background-size:cover;color:#fff;display:flex;align-items:center;position:relative;overflow:hidden}
+.pass-hero:after{content:"ART / CRAFT / CITY";position:absolute;right:-35px;bottom:35px;transform:rotate(-90deg);font:8px Georgia;letter-spacing:.34em;color:#d6ad6999}
+.pass-hero-copy{max-width:570px}
 .pass-hero small{color:#d6ad69;font:9px Georgia;letter-spacing:.22em}
-.pass-hero h1{margin:12px 0;font:30px/1.5 "Yu Mincho",Georgia,serif}
-.pass-hero p{font-size:11px;line-height:2;color:#dbe3ea}
+.pass-hero h1{margin:15px 0;font:38px/1.45 "Yu Mincho",Georgia,serif;letter-spacing:.06em}
+.pass-hero p{max-width:520px;font-size:11px;line-height:2;color:#dbe3ea}
+.pass-hero-meta{display:flex;gap:8px;margin:22px 0}.pass-hero-meta span{padding:8px 12px;border:1px solid #d6ad6966;background:#071b4077;font:8px Georgia;letter-spacing:.12em;color:#ead6ab}
 .pass-page h2{font:18px Georgia;margin:0 0 10px}
+.pass-intro{text-align:center;padding:25px 0 5px}.pass-intro small{font:8px Georgia;letter-spacing:.26em;color:#a1783f}.pass-intro h2{margin:10px 0 6px;font:27px "Yu Mincho",Georgia,serif}.pass-intro p{margin:0;font-size:10px;color:#6f685e}
 .pass-plans>div{display:grid;gap:10px}
-.pass-plans article{display:grid;gap:6px;padding:18px;border:1px solid #cdbb9d;background:#fffdf8}
-.pass-plans article small{color:#a1783f;font:9px Georgia;letter-spacing:.18em}
-.pass-plans article strong{font:26px Georgia;color:#071b40}
-.pass-plans article b{font-size:10px;color:#56554f}
-.pass-plans article p{margin:0;font-size:10px;line-height:1.8;color:#56554f}
-.pass-plans article button{margin-top:8px;padding:12px;border:0;background:#071b40;color:#d6ad69;font:12px Georgia}
+.pass-plans article{display:grid;grid-template-columns:1fr 64px;min-height:235px;border:1px solid #cdbb9d;background:#fffdf8;position:relative;overflow:hidden;box-shadow:0 12px 28px #18304712}
+.pass-plans article:before,.pass-plans article:after{content:"";position:absolute;right:52px;width:20px;height:20px;border-radius:50%;background:#f6f1e7;border:1px solid #cdbb9d;z-index:2}.pass-plans article:before{top:-11px}.pass-plans article:after{bottom:-11px}
+.pass-plans article.featured{transform:translateY(-7px);border-color:#bd934b;box-shadow:0 18px 35px #18304728}
+.pass-plan-main{display:grid;align-content:center;gap:8px;padding:22px 18px;background:radial-gradient(circle at 10% 10%,#fff,#f4ecdd)}
+.pass-plan-main small{color:#a1783f;font:8px Georgia;letter-spacing:.15em}.pass-plan-main strong{font:30px Georgia;color:#071b40}.pass-plan-main b{font-size:9px;color:#56554f}.pass-plan-main p{margin:0;font-size:9px;line-height:1.75;color:#56554f}.pass-plan-main button{margin-top:5px;padding:11px;border:0;background:#071b40;color:#d6ad69;font:10px Georgia}
+.pass-plans article>aside{border-left:1px dashed #bda880;background:#c8a45f;color:#071b40;display:grid;justify-items:center;align-content:space-between;padding:16px 5px}.pass-plans article>aside span,.pass-plans article>aside em{font:7px Georgia;letter-spacing:.12em}.pass-plans article>aside i{font:12px/1.35 Georgia;font-style:normal;letter-spacing:.2em}
 .pass-note{font-size:9px;line-height:1.8;color:#7d7466;margin:10px 0 0}
 .pass-list{display:grid;gap:0}
 .pass-list h2{margin-top:14px}
@@ -188,31 +196,31 @@
 .pass-return p{font-size:11px;line-height:2;color:#dbe3ea}
 .pass-return button{margin-top:10px;padding:0 0 4px;border:0;border-bottom:1px solid #c9a35f;background:none;color:#e3c78f;font-size:11px}
 .pass-how ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:11px;line-height:1.8}
-.pass-checkout-card{display:grid;gap:8px;padding:16px;border:1px solid #cdbb9d;background:#fffdf8}
-.pass-radio{display:flex;gap:10px;align-items:center;padding:9px;border:1px solid #e3dbc9;background:#fff}
+.pass-checkout-card{display:grid;gap:8px;padding:22px;border:1px solid #cdbb9d;background:linear-gradient(135deg,#fffdf8,#f3eadb);box-shadow:0 12px 28px #1830470d;position:relative}.pass-checkout-card:after{content:"";position:absolute;inset:7px;border:1px solid #bda27533;pointer-events:none}
+.pass-radio{display:flex;gap:10px;align-items:center;padding:13px;border:1px solid #d8c8aa;background:#fff;position:relative;z-index:1;cursor:pointer;transition:.2s}.pass-radio:hover{border-color:#b68a43;transform:translateX(2px)}
+.pass-radio input{accent-color:#b68a43}
 .pass-radio div{display:grid;gap:2px}
 .pass-radio b{font:12px Georgia}
 .pass-radio small{font-size:9px;color:#7d7466}
 .pass-summary span,.pass-summary strong{display:flex;justify-content:space-between;font-size:11px}
 .pass-summary strong{border-top:1px solid #d8cebd;padding-top:10px;font:14px Georgia}
 .pass-done{text-align:center}
-.pass-card-big{display:grid;justify-items:center;gap:9px;margin:6px auto;padding:28px 22px;width:min(320px,100%);border:1px solid #c9a35f;background:linear-gradient(160deg,#0d2848,#071b40);color:#fff;box-shadow:0 18px 44px #00000055}
-.pass-card-big small{color:#d6ad69;font:9px Georgia;letter-spacing:.24em}
-.pass-card-big h2{margin:0;font:24px Georgia;color:#fff}
-.pass-card-big b{font-size:10px;color:#8fa0b3}
-.pass-qr{display:grid;place-items:center;width:110px;height:110px;margin:8px 0;background:#fff;color:#071b40;font-size:64px}
-.pass-card-big p{margin:0;font-size:10px;letter-spacing:.08em}
-.pass-card-big em{font-style:normal;font-size:9px;color:#d6ad69}
+.pass-card-big{display:grid;grid-template-columns:1fr 165px;margin:18px auto 8px;width:min(680px,100%);min-height:300px;border:1px solid #c9a35f;background:#071b40 url('/art-ticket-gifu.png') center/cover;color:#fff;box-shadow:0 24px 60px #00000055;position:relative;overflow:hidden;text-align:left}
+.pass-card-big:before,.pass-card-big:after{content:"";position:absolute;right:153px;width:24px;height:24px;border-radius:50%;background:#f6f1e7;z-index:3}.pass-card-big:before{top:-13px}.pass-card-big:after{bottom:-13px}
+.pass-card-visual{padding:35px;display:grid;align-content:center;gap:8px;background:linear-gradient(90deg,#071b40f7,#071b40c2)}
+.pass-card-visual small{color:#d6ad69;font:9px Georgia;letter-spacing:.24em}.pass-card-visual>span{font:8px Georgia;letter-spacing:.26em;color:#9aaabb}.pass-card-visual h2{margin:12px 0 0;font:30px Georgia;color:#fff}.pass-card-visual b{font-size:9px;color:#d3dae2}.pass-card-visual p{max-width:300px;margin:17px 0 0;font:7px/1.8 Georgia;letter-spacing:.14em;color:#9ba9b8}.pass-card-visual em{font:8px Georgia;font-style:normal;letter-spacing:.16em;color:#d6ad69}
+.pass-card-big>aside{border-left:1px dashed #d6ad69;display:grid;place-items:center;align-content:center;gap:20px;background:#d2aa62;color:#071b40;text-align:center}.pass-card-big>aside b{font:10px Georgia;letter-spacing:.18em}.pass-card-big>aside small{font-size:8px}
 .pass-done .pass-list{text-align:left}
 
 /* pass pages on desktop */
 @media(min-width:801px){
  .pass-shell{height:100%;overflow:auto;background:radial-gradient(circle at 85% 12%,#fffefa,#f6f1e7 72%);color:#15233a}
  .pass-shell>.content{max-width:820px;margin:0 auto;padding:34px 24px 90px}
- .pass-shell .pass-hero{margin:0;padding:52px 46px}
+ .pass-shell .pass-hero{margin:0 -80px;padding:72px 80px}
  .pass-plans>div{grid-template-columns:repeat(3,1fr)}
  .desk-pass{color:#c59a4f}
 }
+@media(max-width:800px){.pass-hero{min-height:520px;padding:55px 25px;background-position:67% center}.pass-hero h1{font-size:31px}.pass-hero-meta{display:grid;grid-template-columns:1fr 1fr}.pass-intro{padding-left:10px;padding-right:10px}.pass-plans article.featured{transform:none}.pass-card-big{grid-template-columns:1fr;min-height:540px}.pass-card-big:before,.pass-card-big:after{display:none}.pass-card-visual{min-height:350px;padding:30px 25px}.pass-card-big>aside{min-height:180px;border-left:0;border-top:1px dashed #071b40;grid-template-columns:auto 1fr;gap:18px;padding:20px}.pass-card-big>aside small{grid-column:2}}
 .walk-cover-cta{display:inline-block;margin-top:14px;padding:12px 22px;background:#c69a50;color:#071b40;font:13px Georgia;text-decoration:none}
 .walk-stops-pc{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px}
 .walk-stops-pc li{display:flex;gap:11px;align-items:center}
